@@ -1,4 +1,7 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { FiShoppingBag } from 'react-icons/fi';
+import ShoesCarousel from './ShoesCarousel';
 
 const Home = ({ onCategorySelect }) => {
   return (
@@ -6,44 +9,27 @@ const Home = ({ onCategorySelect }) => {
       {/* Hero Section */}
       <section className="relative pt-16 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.div
+          {/* Carrusel de Zapatos */}
+          <ShoesCarousel />
+
+          {/* Título Principal */}
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12 sm:mb-16 lg:mb-20"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 mt-8 relative z-10"
           >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-6xl sm:text-7xl lg:text-9xl mb-4 sm:mb-6 lg:mb-8"
-            >
-              👟
-            </motion.div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 text-gradient leading-tight px-4">
-              SportShoes Ultra
-            </h1>
-            <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-gray-300 mb-8 sm:mb-10 lg:mb-12 max-w-4xl mx-auto font-light px-4">
-              Descubre la colección más exclusiva de calzado deportivo premium
-            </p>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 px-4"
-            >
-              <div className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-full border border-primary/30 backdrop-blur-sm">
-                <span className="text-white font-semibold text-sm sm:text-base lg:text-lg">
-                  ✨ Últimos lanzamientos 2024
-                </span>
-              </div>
-              <div className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-full border border-green-500/30 backdrop-blur-sm">
-                <span className="text-white font-semibold text-sm sm:text-base lg:text-lg">
-                  🔥 Ofertas exclusivas
-                </span>
-              </div>
-            </motion.div>
-          </motion.div>
+            <span className="text-gradient">SportShoes Ultra</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl relative z-10"
+          >
+            Descubre la colección más exclusiva de calzado deportivo premium
+          </motion.p>
         </div>
       </section>
 
