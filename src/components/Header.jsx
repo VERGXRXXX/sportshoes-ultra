@@ -122,33 +122,55 @@ const Header = ({
     <header className="sticky top-0 z-50 bg-dark-900/60 backdrop-blur-3xl border-b border-white/8 shadow-2xl">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div
-          className={`flex items-center h-16 sm:h-20 ${
-            isHome ? 'justify-center relative' : 'justify-between'
+          className={`flex items-center h-16 sm:h-20 relative ${
+            !isHome ? 'justify-between' : 'justify-center'
           }`}
         >
-          {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className={`flex items-center cursor-pointer group ${
-              isHome ? 'mx-auto' : 'flex-shrink-0'
-            }`}
-            onClick={onHomeClick}
-          >
-            <div className="text-3xl sm:text-4xl lg:text-5xl mr-3 sm:mr-4 transform group-hover:scale-110 transition-transform">
-              👟
+          {/* Logo - Centrado en Home, ajustado en móvil para evitar superposición */}
+          {isHome ? (
+            <motion.div
+              animate={{
+                left: searchExpanded ? 'calc(50% - 205px)' : '50%',
+              }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="absolute flex items-center cursor-pointer group z-10 -translate-x-1/2"
+              style={{
+                left: 'clamp(30%, 50%, 50%)', // Móvil: 30%, Desktop: 50%
+              }}
+              onClick={onHomeClick}
+            >
+              <div className="text-2xl sm:text-3xl lg:text-5xl mr-2 sm:mr-3 lg:mr-4 transform group-hover:scale-110 transition-transform">
+                👟
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient">
+                  SportShoes Ultra
+                </h1>
+                <p className="text-xs sm:text-sm text-gray-400">Experience Premium</p>
+              </div>
+              <div className="block sm:hidden">
+                <h1 className="text-base font-bold text-gradient whitespace-nowrap">SportShoes</h1>
+              </div>
+            </motion.div>
+          ) : (
+            <div
+              className="flex-shrink-0 flex items-center cursor-pointer group"
+              onClick={onHomeClick}
+            >
+              <div className="text-3xl sm:text-4xl lg:text-5xl mr-3 sm:mr-4 transform group-hover:scale-110 transition-transform">
+                👟
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient">
+                  SportShoes Ultra
+                </h1>
+                <p className="text-xs sm:text-sm text-gray-400">Experience Premium</p>
+              </div>
+              <div className="sm:hidden">
+                <h1 className="text-xl font-bold text-gradient">SportShoes</h1>
+              </div>
             </div>
-            <div className="hidden sm:block">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient">
-                SportShoes Ultra
-              </h1>
-              <p className="text-xs sm:text-sm text-gray-400">Experience Premium</p>
-            </div>
-            <div className="sm:hidden">
-              <h1 className="text-xl font-bold text-gradient">SportShoes</h1>
-            </div>
-          </motion.div>
-
+          )}
           {/* Desktop Navigation - Solo visible si NO es Home */}
           {!isHome && (
             <nav className="hidden lg:flex items-center space-x-1">
@@ -168,8 +190,12 @@ const Header = ({
             </nav>
           )}
 
-          {/* Right Side Actions */}
-          <div className={`flex items-center gap-2 ${isHome ? 'absolute right-4 sm:right-8' : ''}`}>
+          {/* Right Side Actions - Siempre a la derecha con espacio para móvil */}
+          <div
+            className={`flex items-center gap-1 sm:gap-2 ${
+              isHome ? 'absolute right-4 sm:right-6 lg:right-8' : ''
+            }`}
+          >
             {/* Search Bar - Desktop */}
             <div className="hidden md:flex items-center" ref={searchContainerRef}>
               <div className="relative flex items-center">
@@ -232,13 +258,13 @@ const Header = ({
                 <button
                   id="search-toggle-btn"
                   onClick={toggleSearch}
-                  className={`ml-2 w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-300 ${
+                  className={`ml-2 w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl transition-all duration-300 ${
                     searchExpanded
                       ? 'bg-primary/20 border-primary/50 text-primary'
                       : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-primary/50 text-gray-300 hover:text-primary'
                   } border`}
                 >
-                  <FiSearch className="w-5 h-5" />
+                  <FiSearch className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
               </div>
             </div>
@@ -248,35 +274,33 @@ const Header = ({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onCartClick}
-              className="relative w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all"
+              className="relative w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl bg-white/5 boredr border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all"
             >
-              <FiShoppingCart className="w-5 h-5" />
+              <FiShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
               {cartItemsCount > 0 && (
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-primary to-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                  className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-r from-primary to-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold"
                 >
                   {cartItemsCount}
                 </motion.div>
               )}
             </motion.button>
-          </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className={`lg:hidden w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/5 border border-white/15 rounded-2xl hover:bg-white/10 hover:border-primary/60 transition-all duration-300 relative overflow-hidden group ${
-              isHome ? 'absolute left-4' : ''
-            }`}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            {menuOpen ? (
-              <FiX className="w-5 h-5 sm:w-6 sm:h-6 relative z-10" />
-            ) : (
-              <FiMenu className="w-5 h-5 sm:w-6 sm:h-6 relative z-10" />
-            )}
-          </button>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="lg:hidden w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/5 border border-white/15 rounded-2xl hover:bg-white/10 hover:border-primary/60 transition-all duration-300 relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              {menuOpen ? (
+                <FiX className="w-5 h-5 sm:w-6 sm:h-6 relative z-10" />
+              ) : (
+                <FiMenu className="w-5 h-5 sm:w-6 sm:h-6 relative z-10" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
