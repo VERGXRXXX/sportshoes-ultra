@@ -10,6 +10,7 @@ const ShoesCarousel = () => {
   const [isPaused, setIsPaused] = useState(false);
 
   // Generar productos aleatorios al cargar
+  // NOTE: include `catalogData` and `modelsByBrand` in deps to satisfy linters
   useEffect(() => {
     const generateRandomProducts = () => {
       const allBrands = [
@@ -22,7 +23,8 @@ const ShoesCarousel = () => {
       ];
 
       const uniqueBrands = [...new Set(allBrands)];
-      const shuffledBrands = uniqueBrands.sort(() => Math.random() - 0.5).slice(0, 12);
+      // Avoid mutating `uniqueBrands` with sort() in place — create a copy first
+      const shuffledBrands = [...uniqueBrands].sort(() => Math.random() - 0.5).slice(0, 12);
 
       const colors = [
         'Negro',
@@ -71,7 +73,7 @@ const ShoesCarousel = () => {
     };
 
     generateRandomProducts();
-  }, []);
+  }, [catalogData, modelsByBrand]);
 
   // Auto-play con pausa
   useEffect(() => {
@@ -290,7 +292,7 @@ const ShoesCarousel = () => {
           whileHover={{ scale: 1.1, x: -5 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => paginate(-1)}
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center text-white transition-all border border-white/20 shadow-xl z-10 hidden md:flex"
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 backdrop-blur-xl rounded-full hidden md:flex md:items-center md:justify-center text-white transition-all border border-white/20 shadow-xl z-10"
         >
           <FiChevronLeft className="w-6 h-6" />
         </motion.button>
@@ -299,7 +301,7 @@ const ShoesCarousel = () => {
           whileHover={{ scale: 1.1, x: 5 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => paginate(1)}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center text-white transition-all border border-white/20 shadow-xl z-10 hidden md:flex"
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 backdrop-blur-xl rounded-full hidden md:flex md:items-center md:justify-center text-white transition-all border border-white/20 shadow-xl z-10"
         >
           <FiChevronRight className="w-6 h-6" />
         </motion.button>
